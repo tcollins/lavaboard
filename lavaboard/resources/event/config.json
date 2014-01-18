@@ -1,0 +1,37 @@
+{
+	"type": "Collection",
+	"properties": {
+		"type": {
+			"name": "type",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "type",
+			"order": 0
+		},
+		"namespace": {
+			"name": "namespace",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "namespace",
+			"order": 1
+		},
+		"timestamp": {
+			"name": "timestamp",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "timestamp",
+			"order": 2
+		},
+		"data": {
+			"name": "data",
+			"type": "object",
+			"typeLabel": "object",
+			"required": false,
+			"id": "data",
+			"order": 3
+		}
+	}
+}
