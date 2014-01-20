@@ -1,12 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <link rel='stylesheet' type="text/css" href='vendor/gridster/jquery.gridster.min.css' />
+    <link rel='stylesheet' type="text/css" href='css/lavaboard.css' />
+    
+	<script type="text/javascript" src="vendor/js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="vendor/gridster/jquery.gridster.min.js"></script>
 	<script type="text/javascript" src="dpd.js"></script>
+    <script type="text/javascript" src="js/lavaboard.js"></script>
 </head>
 <body>
-	<h1>Welcome to Deployd!</h1>
-	<p>You've just created a Deployd app. You can add front-end files in the <code>public</code> folder.</p>
-	<p>If you're new to Deployd, have a look at the <a href="http://docs.deployd.com/docs/getting-started/what-is-deployd.md">Getting Started Guide</a> or <a href="http://docs.deployd.com/docs/getting-started/your-first-api.md">Hello World Tutorial<a>.</p>
+	
+    <div class="gridster">
+        <ul></ul>
+    </div>
+
+ 
+<script type="text/javascript" id="code">
+
+    var gridster;
+
+    $(function(){
+
+        gridster = $(".gridster > ul").gridster({
+          widget_margins: [5, 5],
+          widget_base_dimensions: [240, 350]
+        }).data('gridster');
+
+        var widgets = [
+            ['<li>4</li>', 2, 1],
+            ['<li>0</li>', 1, 1],          
+            ['<li>2</li>', 1, 2],
+            ['<li>1</li>', 1, 1],
+            ['<li>3</li>', 2, 1],         
+        ];
+    
+      
+        $.each(widgets, function(i, widget){
+            gridster.add_widget.apply(gridster, widget)
+        });
+
+    });
+</script>
+        
 </body>
 </html>
