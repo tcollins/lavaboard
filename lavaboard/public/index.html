@@ -22,6 +22,7 @@
 
     $(function(){
 
+        /*
         gridster = $(".gridster > ul").gridster({
           widget_margins: [5, 5],
           widget_base_dimensions: [240, 350]
@@ -39,7 +40,40 @@
         $.each(widgets, function(i, widget){
             gridster.add_widget.apply(gridster, widget)
         });
+        */
 
+            
+        lavaboard.init($(".gridster > ul"), {
+            widget_margins: [5, 5],
+            widget_base_dimensions: [240, 350]
+        });    
+            
+     //    var widgets = [
+     //       ['<li>4</li>', 2, 1],
+     //       ['<li>0</li>', 1, 1],          
+     //       ['<li>2</li>', 1, 2],
+     //       ['<li>1</li>', 1, 1],
+     //       ['<li>3</li>', 2, 1],         
+     //   ];
+    
+      
+       // $.each(widgets, function(i, widget){
+       //     gridster.add_widget.apply(gridster, widget)
+       // });
+        
+        lavaboard.addWidget('simpleCountWidget', 2, 1, {});
+        lavaboard.addWidget('simpleCountWidget', 1, 1, {});
+        lavaboard.addWidget('simpleCountWidget', 1, 2, {});
+        
+        lavaboard.start();
+        
+            // lavaboard.addWidget();
+           //  lavaboard.addWidget();
+             
+       // lavaboard.addWidget({
+        //    widgetName: '',
+       // });    
+            
     });
 </script>
         
