@@ -61,9 +61,17 @@
        //     gridster.add_widget.apply(gridster, widget)
        // });
         
-        lavaboard.addWidget('simpleCountWidget', 2, 1, {});
-        lavaboard.addWidget('simpleCountWidget', 1, 1, {});
+        lavaboard.addWidget('simpleCountWidget', 2, 1, {
+            title: 'Reviews',
+            startsWith:'review.created'
+        });
+        lavaboard.addWidget('simpleCountWidget', 1, 1, {
+            title: 'Review Posted To Facebook',
+            startsWith:'review.posted.facebook'});
         lavaboard.addWidget('simpleCountWidget', 1, 2, {});
+        lavaboard.addWidget('simpleCountWidget', 1, 1, {
+            title: 'Review Posted To DocScores',
+            startsWith:'review.posted.docscores'});
         
         lavaboard.start();
         
