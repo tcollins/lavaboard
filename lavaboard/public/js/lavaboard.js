@@ -72,8 +72,12 @@ var lavaboard = (function () {
         if(widget){
             var id = 'lavaboardwidget-' + widgets.length;
             widget.id = id;
-                        
-            var html = '<li id="'+id+'">';
+            var classes = 'lbwidget lbwidget'+gridX+'-'+gridY;
+            if(opts && opts.class){
+                classes = classes + ' ' + opts.class;
+            }
+            
+            var html = '<li id="'+id+'" class="'+classes+'">';
             html = html + widget.buildHtml();
             html = html + '</li>';
             
@@ -131,17 +135,18 @@ lavaboard.registerWidget({
             },
             buildHtml: function(){
                 // return html for widget
-                var h = '<h2>'+this.opts.title+'</h2>';
-                h = h + '<b style="font-size:40px; color:#333;">0</b>';
+                var h = '<div class="simpleCountWidget">';
+                h = h + '<h2>'+this.opts.title+'</h2>';
+                h = h + '<h3>0</h3>';
+                h = h + '<div>';
                 return h;
             },
             update: function(rootEl){
                 // given the rootEl jQuery obj for this widget
                 // update the UI for this widget
-                rootEl.find('b').text(this.data.count);
+                rootEl.find('h3').text(this.data.count);
             },
-            handleEvent: function(event){                
-                console.log('handleEvent - ' + this.id, event);
+            handleEvent: function(event){                                
                 if(typeof this.opts.startsWith !== 'undefined'){
                     if(lavaboard.util.startsWith(event.namespace, this.opts.startsWith)){
                         this.data.count++;
@@ -155,6 +160,72 @@ lavaboard.registerWidget({
 });
 
 
-
+lavaboard.registerWidget({
+    name:'eventListWidget',
+    create: function(){
+        return {
+            init: function(opts){
+                
+                var defaults = {title:'title', limit:10};                
+                this.opts = $.extend(defaults, opts); 
+                
+                this.data = {recentEvents:[]};
+            },
+            buildHtml: function(){
+                // return html for widget
+                console.log('buildHtml');
+                var h = '<div class="eventListWidget">';
+                h = h + '<h2>'+this.opts.title+'</h2>';
+                h = h + '<ul>0</ul>';
+                h = h + '<div>';
+                return h;
+            },
+            update: function(rootEl){
+                 console.log('update');
+                // given the rootEl jQuery obj for this widget
+                // update the UI for this widget
+                //rootEl.find('h3').text(this.data.count);
+                var ul = rootEl.find('ul');
+                var arr = this.data.recentEvents;
+                var h = '';
+                
+                if(arr.length > 0){
+                    for(var i=0; i<arr.length; i++){
+                        h = h + '<li>';
+                        h = h + arr[i].timestamp;
+                        h = h + '<br>';
+                        h = h + arr[i].namespace;
+                        h = h + '</li>';
+                    } 
+                }    
+                
+                ul.empty();
+                ul.append(h);
+                
+            },
+            handleEvent: function(event){                
+                //console.log('handleEvent - ' + this.id, event);
+                //if(typeof this.opts.startsWith !== 'undefined'){
+                //    if(lavaboard.util.startsWith(event.namespace, this.opts.startsWith)){
+                //        this.data.count++;
+                //    }
+               // }else{
+                //    this.data.count++;
+                //}       
+                this._addEvent(event);
+            },
+            _addEvent: function(event){
+                if(this.data.recentEvents.length >= this.opts.limit){
+                    // remove last item from array
+                    this.data.recentEvents.pop();
+                }
+                // add event to the front of the array
+                this.data.recentEvents.unshift(event);
+                
+                console.log(this.data.recentEvents);
+            }
+        };
+    }    
+});
 
 

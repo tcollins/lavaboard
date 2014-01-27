@@ -18,69 +18,34 @@
  
 <script type="text/javascript" id="code">
 
-    var gridster;
-
     $(function(){
-
-        /*
-        gridster = $(".gridster > ul").gridster({
-          widget_margins: [5, 5],
-          widget_base_dimensions: [240, 350]
-        }).data('gridster');
-
-        var widgets = [
-            ['<li>4</li>', 2, 1],
-            ['<li>0</li>', 1, 1],          
-            ['<li>2</li>', 1, 2],
-            ['<li>1</li>', 1, 1],
-            ['<li>3</li>', 2, 1],         
-        ];
-    
-      
-        $.each(widgets, function(i, widget){
-            gridster.add_widget.apply(gridster, widget)
-        });
-        */
-
-            
+ 
         lavaboard.init($(".gridster > ul"), {
             widget_margins: [5, 5],
             widget_base_dimensions: [240, 350]
-        });    
-            
-     //    var widgets = [
-     //       ['<li>4</li>', 2, 1],
-     //       ['<li>0</li>', 1, 1],          
-     //       ['<li>2</li>', 1, 2],
-     //       ['<li>1</li>', 1, 1],
-     //       ['<li>3</li>', 2, 1],         
-     //   ];
-    
-      
-       // $.each(widgets, function(i, widget){
-       //     gridster.add_widget.apply(gridster, widget)
-       // });
+        });  
         
         lavaboard.addWidget('simpleCountWidget', 2, 1, {
             title: 'Reviews',
-            startsWith:'review.created'
+            startsWith:'review.created',
+            class: 'bgcolor-nephritis'
         });
         lavaboard.addWidget('simpleCountWidget', 1, 1, {
             title: 'Review Posted To Facebook',
-            startsWith:'review.posted.facebook'});
-        lavaboard.addWidget('simpleCountWidget', 1, 2, {});
+            startsWith:'review.posted.facebook',
+            class: 'bgcolor-amethyst'
+        });
+        lavaboard.addWidget('eventListWidget', 1, 2, {
+            title: 'Recent Actions',
+            class: 'bgcolor-peter-river'
+        });
         lavaboard.addWidget('simpleCountWidget', 1, 1, {
             title: 'Review Posted To DocScores',
-            startsWith:'review.posted.docscores'});
+            startsWith:'review.posted.docscores',
+            class: 'bgcolor-pumpkin'
+        });
         
-        lavaboard.start();
-        
-            // lavaboard.addWidget();
-           //  lavaboard.addWidget();
-             
-       // lavaboard.addWidget({
-        //    widgetName: '',
-       // });    
+        lavaboard.start();        
             
     });
 </script>
