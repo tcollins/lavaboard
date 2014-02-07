@@ -5,6 +5,7 @@ var lavaboard = (function () {
     
     var registeredWidgets = {};
     var widgets = [];
+    var timeAgoWatchHasBeenStarted = false;
     var gridster;
    
     // private  props/methods
@@ -51,6 +52,22 @@ var lavaboard = (function () {
         });       
     };
     
+    var initTimeAgoWatch = function(rootEl){
+        if(!timeAgoWatchHasBeenStarted){                    
+            var update = function(){
+                rootEl.find('.timeago').each(function(){
+                    var el = $(this);
+                    var rel = el.attr('rel');
+                    if(rel){
+                        var day = moment(parseInt(rel));
+                        el.text(day.fromNow());
+                    }
+                });
+            };
+            setInterval(update, 60000);
+        }
+     };
+    
     // public props/methods
     var pub = {};	
 	pub.registerWidget = function (widget) {
@@ -64,6 +81,7 @@ var lavaboard = (function () {
         //}).data('gridster');
         
         gridster = gridsterJqEl.gridster(gridsterOpts).data('gridster');
+        initTimeAgoWatch(gridsterJqEl);
 	};
     
     pub.addWidget = function (widgetName, gridX, gridY, opts) {	
@@ -169,60 +187,65 @@ lavaboard.registerWidget({
                 var defaults = {title:'title', limit:10};                
                 this.opts = $.extend(defaults, opts); 
                 
-                this.data = {recentEvents:[]};
-            },
+                this.data = {recentEvents:[], toAdd:[]};               
+            },            
             buildHtml: function(){
                 // return html for widget
-                console.log('buildHtml');
                 var h = '<div class="eventListWidget">';
                 h = h + '<h2>'+this.opts.title+'</h2>';
-                h = h + '<ul>0</ul>';
+                h = h + '<ul></ul>';
                 h = h + '<div>';
                 return h;
             },
             update: function(rootEl){
-                 console.log('update');
                 // given the rootEl jQuery obj for this widget
-                // update the UI for this widget
-                //rootEl.find('h3').text(this.data.count);
+                // update the UI for this widget              
                 var ul = rootEl.find('ul');
-                var arr = this.data.recentEvents;
-                var h = '';
                 
-                if(arr.length > 0){
-                    for(var i=0; i<arr.length; i++){
-                        h = h + '<li>';
-                        h = h + arr[i].timestamp;
-                        h = h + '<br>';
-                        h = h + arr[i].namespace;
-                        h = h + '</li>';
+                var toAdd = this.data.toAdd;
+                this.data.toAdd = [];
+                
+                if(toAdd.length > 0){
+                    for(var i=0; i<toAdd.length; i++){
+                       this._addLi(toAdd[i], ul);
                     } 
-                }    
-                
-                ul.empty();
-                ul.append(h);
-                
+                }                  
             },
             handleEvent: function(event){                
-                //console.log('handleEvent - ' + this.id, event);
-                //if(typeof this.opts.startsWith !== 'undefined'){
-                //    if(lavaboard.util.startsWith(event.namespace, this.opts.startsWith)){
-                //        this.data.count++;
-                //    }
-               // }else{
-                //    this.data.count++;
-                //}       
-                this._addEvent(event);
-            },
-            _addEvent: function(event){
-                if(this.data.recentEvents.length >= this.opts.limit){
-                    // remove last item from array
-                    this.data.recentEvents.pop();
-                }
-                // add event to the front of the array
-                this.data.recentEvents.unshift(event);
+               if(this.data.toAdd.length >= this.opts.limit){                                   
+                    // remove first item from array
+                    this.data.toAdd.shift();
+                }                               
+                // add event to the end of the array
+                this.data.toAdd.push(event);
+            },            
+            _addLi: function(event, ul){
                 
-                console.log(this.data.recentEvents);
+                var day = moment(event.timestamp);
+               
+                var h = '';                  
+                h = h + '<li style="display:none;">';
+                h = h +   '<span class="timeago" rel="'+event.timestamp+'">';
+                h = h +     day.fromNow();
+                h = h +   '</span>';
+                h = h + '<br>';
+                h = h + event.namespace;
+                h = h + '</li>';
+                
+                var li = $(h);
+                ul.prepend(li);
+                li.show();
+                li.addClass('show');
+                
+                var count = ul.children().length;
+                if(count > this.opts.limit){
+                    var lastChild = ul.children().last();
+                    lastChild.removeClass('show');
+                    setTimeout(function(){
+                        lastChild.remove();
+                    }, 1000);                    
+                }
+                
             }
         };
     }    

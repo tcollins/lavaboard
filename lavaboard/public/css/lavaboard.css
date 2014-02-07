@@ -41,30 +41,8 @@ body                            {background: #222; color: #fff; font-family:'Ope
 .simpleCountWidget h3           {margin: 24px 0 0;}
 
 
-.eventListWidget ul { 
-   margin:0px; padding:0px;
-}
-.eventListWidget li { 
-    height: 50px; -webkit-transition: all 0.5s ease-out; transition: all 0.5s ease-out;
-}
-
-/* See later in the blog post for a cleaner way to generate these rules */
-/* http://blog.stevensanderson.com/2013/03/15/animating-lists-with-css-3-transitions/ */
-.eventListWidget li:nth-child(1)  { -webkit-transform: translate3d(0, 0%, 0); transform: translate3d(0, 0%, 0); }
-.eventListWidget li:nth-child(2)  { -webkit-transform: translate3d(0, 100%, 0); transform: translate3d(0, 100%, 0); }
-.eventListWidget li:nth-child(3)  { -webkit-transform: translate3d(0, 200%, 0); transform: translate3d(0, 200%, 0); }
-.eventListWidget li:nth-child(4)  { -webkit-transform: translate3d(0, 300%, 0); transform: translate3d(0, 300%, 0); }
-.eventListWidget li:nth-child(5)  { -webkit-transform: translate3d(0, 400%, 0); transform: translate3d(0, 400%, 0); }
-.eventListWidget li:nth-child(6)  { -webkit-transform: translate3d(0, 500%, 0); transform: translate3d(0, 500%, 0); }
-.eventListWidget li:nth-child(7)  { -webkit-transform: translate3d(0, 600%, 0); transform: translate3d(0, 600%, 0); }
-.eventListWidget li:nth-child(8)  { -webkit-transform: translate3d(0, 700%, 0); transform: translate3d(0, 700%, 0); }
-.eventListWidget li:nth-child(9)  { -webkit-transform: translate3d(0, 800%, 0); transform: translate3d(0, 800%, 0); }
-.eventListWidget li:nth-child(10) { -webkit-transform: translate3d(0, 900%, 0); transform: translate3d(0, 900%, 0); }
-.eventListWidget li:nth-child(11) { -webkit-transform: translate3d(0, 1000%, 0); transform: translate3d(0, 1000%, 0); }
-.eventListWidget li:nth-child(12) { -webkit-transform: translate3d(0, 1100%, 0); transform: translate3d(0, 1100%, 0); }
-.eventListWidget li:nth-child(13) { -webkit-transform: translate3d(0, 1200%, 0); transform: translate3d(0, 1200%, 0); }
-.eventListWidget li:nth-child(14) { -webkit-transform: translate3d(0, 1300%, 0); transform: translate3d(0, 1300%, 0); }
-.eventListWidget li:nth-child(15) { -webkit-transform: translate3d(0, 1400%, 0); transform: translate3d(0, 1400%, 0); }
-
+.eventListWidget ul             {margin:0px; padding:0px;}
+.eventListWidget li             {height: 0px; opacity:0; border-top:1px solid rgba(255, 255, 255, 0.2); -webkit-transition: all 0.9s ease-out; transition: all 0.9s ease-out;}
+.eventListWidget li.show        {height: 50px; opacity:1;}
 
 
