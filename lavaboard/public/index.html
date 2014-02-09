@@ -2,6 +2,7 @@
 <html>
 <head>
     <link rel='stylesheet' type="text/css" href='vendor/gridster/jquery.gridster.min.css' />
+    <link rel='stylesheet' type="text/css" href='vendor/font-awesome-4.0.3/css/font-awesome.min.css' />
     <link rel='stylesheet' type="text/css" href='css/lavaboard.css' />
     
 	<script type="text/javascript" src="vendor/js/jquery-1.10.2.min.js"></script>
@@ -23,27 +24,39 @@
  
         lavaboard.init($(".gridster > ul"), {
             widget_margins: [5, 5],
-            widget_base_dimensions: [240, 350]
+            //widget_base_dimensions: [240, 350]
+            widget_base_dimensions: [50, 350]
         });  
         
-        lavaboard.addWidget('simpleCountWidget', 2, 1, {
-            title: 'Reviews',
+        lavaboard.addWidget('simpleCountWidget', 8, 1, {
+            title: 'REVIEWS',
             startsWith:'review.created',
             class: 'bgcolor-nephritis'
         });
-        lavaboard.addWidget('simpleCountWidget', 1, 1, {
-            title: 'Review Posted To Facebook',
-            startsWith:'review.posted.facebook',
+        lavaboard.addWidget('simpleCountWidget', 4, 1, {
+            title: 'SIGN-INS',
+            startsWith:'user.login',
             class: 'bgcolor-amethyst'
         });
-        lavaboard.addWidget('eventListWidget', 1, 2, {
-            title: 'Recent Actions',
-            class: 'bgcolor-peter-river'
+        lavaboard.addWidget('eventListWidget', 4, 2, {
+            title: 'ACTIVITY',
+            class: 'bgcolor-peter-river',
+            eventMap: {
+                'review.created':   {label: 'Review', icon: 'fa fa-star'},
+                'user.login':       {label: 'Sign In', icon: 'fa fa-user'},
+                'email.sent':       {label: 'Email Sent', icon: 'fa fa-envelope-o'},
+                'patient.checkin':  {label: 'Check In', icon: 'fa fa-check-circle-o'}
+            }
         });
-        lavaboard.addWidget('simpleCountWidget', 1, 1, {
-            title: 'Review Posted To DocScores',
-            startsWith:'review.posted.docscores',
-            class: 'bgcolor-pumpkin'
+        lavaboard.addWidget('simpleCountWidget', 5, 1, {
+            title: 'EMAIL SENT',
+            startsWith:'email.sent',
+            class: 'bgcolor-belize-hole'
+        });
+          lavaboard.addWidget('simpleCountWidget', 7, 1, {
+            title: 'CHECK-INS',
+            startsWith:'patient.checkin',
+            class: 'bgcolor-carrot'
         });
         
         lavaboard.start();        

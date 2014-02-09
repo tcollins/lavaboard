@@ -42,7 +42,10 @@ body                            {background: #222; color: #fff; font-family:'Ope
 
 
 .eventListWidget ul             {margin:0px; padding:0px;}
-.eventListWidget li             {height: 0px; opacity:0; border-top:1px solid rgba(255, 255, 255, 0.2); -webkit-transition: all 0.9s ease-out; transition: all 0.9s ease-out;}
-.eventListWidget li.show        {height: 50px; opacity:1;}
-
+.eventListWidget li             {height: 0px; opacity:0; border-top:1px solid rgba(255, 255, 255, 0.2); -webkit-transition: all 0.9s ease-out; transition: all 0.9s ease-out; font-size:26px; padding:4px 0px 0px 30px;}
+.eventListWidget li.show        {height: 60px; opacity:1;}
+.eventListWidget li div.l       {float:left;}
+.eventListWidget li div.i       {float:left; width:28px; line-height:28px; opacity:0.8;}
+.eventListWidget li i           {font-size: 20px;}
+.eventListWidget li .timeago    {font-size: 15px; margin:0 0 0 28px; float:left; clear:both; opacity:0.7;}
 

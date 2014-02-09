@@ -184,7 +184,7 @@ lavaboard.registerWidget({
         return {
             init: function(opts){
                 
-                var defaults = {title:'title', limit:10};                
+                var defaults = {title:'title', limit:10, eventMap:{}};                
                 this.opts = $.extend(defaults, opts); 
                 
                 this.data = {recentEvents:[], toAdd:[]};               
@@ -223,13 +223,26 @@ lavaboard.registerWidget({
                 
                 var day = moment(event.timestamp);
                
+                var evtDesc = this.opts.eventMap[event.namespace];
+                var label = event.namespace;
+                var icon = '';
+                if(evtDesc){
+                    label = evtDesc.label;
+                    icon = evtDesc.icon;
+                }else{
+                    // not in event map, don't include it
+                    return;
+                }
+                
                 var h = '';                  
                 h = h + '<li style="display:none;">';
+                h = h +   '<div class="i"><i class="'+icon+'"></i></div>';
+                h = h +   '<div class="l">';                
+                h = h +     label;
+                h = h +   '</div>';
                 h = h +   '<span class="timeago" rel="'+event.timestamp+'">';
                 h = h +     day.fromNow();
                 h = h +   '</span>';
-                h = h + '<br>';
-                h = h + event.namespace;
                 h = h + '</li>';
                 
                 var li = $(h);
