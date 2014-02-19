@@ -111,9 +111,14 @@ var lavaboard = (function () {
     */
     pub.start = function(){
         
+        // find the millis for the begining of today
+        var startOfTodayUnixEpochMillis = moment().startOf('day').valueOf();
+                
         // GET THE LATEST EVENTS VIA REST AJAX CALL AND UPDATE
         //var query = {"type":"foobar","namespace":"foobar","timestamp":"foobar"};
-        var query = {};                 
+        var query = {
+            timestamp: {$gt: startOfTodayUnixEpochMillis}
+        };                 
         dpd.event.get(query, function (eventArr) {                                 
             sendEventToAllWidgets(eventArr);
             updateAllWidgets();
@@ -184,7 +189,7 @@ lavaboard.registerWidget({
         return {
             init: function(opts){
                 
-                var defaults = {title:'title', limit:10, eventMap:{}};                
+                var defaults = {title:'title', limit:11, eventMap:{}};                
                 this.opts = $.extend(defaults, opts); 
                 
                 this.data = {recentEvents:[], toAdd:[]};               
@@ -194,7 +199,7 @@ lavaboard.registerWidget({
                 var h = '<div class="eventListWidget">';
                 h = h + '<h2>'+this.opts.title+'</h2>';
                 h = h + '<ul></ul>';
-                h = h + '<div>';
+                h = h + '</div>';
                 return h;
             },
             update: function(rootEl){
@@ -211,8 +216,14 @@ lavaboard.registerWidget({
                     } 
                 }                  
             },
-            handleEvent: function(event){                
-               if(this.data.toAdd.length >= this.opts.limit){                                   
+            handleEvent: function(event){
+                var evtDesc = this.opts.eventMap[event.namespace];
+                if(typeof evtDesc === 'undefined'){
+                    // not in event map, don't include it
+                    return;
+                }
+                
+                if(this.data.toAdd.length > this.opts.limit){                                   
                     // remove first item from array
                     this.data.toAdd.shift();
                 }                               
@@ -236,13 +247,15 @@ lavaboard.registerWidget({
                 
                 var h = '';                  
                 h = h + '<li style="display:none;">';
-                h = h +   '<div class="i"><i class="'+icon+'"></i></div>';
-                h = h +   '<div class="l">';                
-                h = h +     label;
+                h = h +   '<div class="wrap">';
+                h = h +     '<div class="i"><i class="'+icon+'"></i></div>';
+                h = h +     '<div class="l">';                
+                h = h +       label;
+                h = h +     '</div>';
+                h = h +     '<span class="timeago" rel="'+event.timestamp+'">';
+                h = h +       day.fromNow();
+                h = h +     '</span>';
                 h = h +   '</div>';
-                h = h +   '<span class="timeago" rel="'+event.timestamp+'">';
-                h = h +     day.fromNow();
-                h = h +   '</span>';
                 h = h + '</li>';
                 
                 var li = $(h);
@@ -250,9 +263,15 @@ lavaboard.registerWidget({
                 li.show();
                 li.addClass('show');
                 
+                setTimeout(function(){
+                    li.find('.wrap').addClass('fadein');
+                }, 300);  
+                
                 var count = ul.children().length;
+                
                 if(count > this.opts.limit){
                     var lastChild = ul.children().last();
+                    lastChild.prev().addClass('last');
                     lastChild.removeClass('show');
                     setTimeout(function(){
                         lastChild.remove();
