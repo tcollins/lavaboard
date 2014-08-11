@@ -1,9 +1,8 @@
 # Lava Board
 
-
+### Simple Dashboard App using Deployd (nodejs)
 
 ```
-#!javascript
 
 var evtObj = {
     type:'standard',
