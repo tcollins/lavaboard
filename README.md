@@ -1,4 +1,9 @@
-# This is my README
+# Lava Board
+
+
+
+```
+#!javascript
 
 var evtObj = {
     type:'standard',
@@ -12,3 +17,7 @@ dpd.event.post(evtObj, function(result, err) {
   if(err) return console.log(err);
   console.log(result, result.id);
 });
+
+```
+
+
